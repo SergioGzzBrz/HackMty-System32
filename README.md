@@ -1,5 +1,2 @@
 # HackMty-System32
-Fernando  
-Sergio 
-Luis
-Rodrigo
+Fernando, Sergio, Luis y Rodrigo
