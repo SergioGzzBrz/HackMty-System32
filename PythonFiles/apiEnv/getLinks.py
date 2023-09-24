@@ -1,46 +1,32 @@
-import scrapy
-from scrapy.crawler import CrawlerProcess
-final_links = []
-final_titles = []
-final_text = []
+import requests
+from bs4 import BeautifulSoup
+
 final_urls = []
 textToSearch = ""
 
-
-class RedditSpider(scrapy.Spider):
-    name = "RedditSpider"
-
-    def start_requests(self):
-        global textToSearch
-        textToSearch = textToSearch.replace(" ", "+")
-        urls = ["https://www.google.com/search?q=" + str(textToSearch)]
-        # print("Started")
-        for url in urls:
-            yield scrapy.Request(url=url, callback=self.get_post_links)
-        # print("Ended")
-
-    def get_post_links(self, response):
-        global final_urls
-        urls = response.xpath('//a/@href').extract()
-        final_urls = urls
-
+def get_post_links(response_text):
+    global final_urls
+    soup = BeautifulSoup(response_text, 'html.parser')
+    links = [a['href'] for a in soup.find_all('a', href=True)]
+    final_urls = links
 
 def getTheLinks(text):
     global textToSearch
-    textToSearch = text
-    process = CrawlerProcess()
-    process.crawl(RedditSpider)
-    process.start()
-    # print("hello")
-    # print(final_urls[1])
-    links = final_urls
-    filtered_links = [link for link in links if link.startswith("/url?q=")]
-    extracted_urls = [link.split('=')[1].split('&')[0] for link in filtered_links]
-    return extracted_urls[:min(5, len(extracted_urls))]
-
+    global final_urls
+    textToSearch = text.replace(" ", "+")
+    google_url = "https://www.google.com/search?q=" + textToSearch
+    response = requests.get(google_url)
+    if response.status_code == 200:
+        get_post_links(response.text)
+        links = final_urls
+        filtered_links = [link for link in links if link.startswith("/url?q=")]
+        extracted_urls = [link.split('=')[1].split('&')[0] for link in filtered_links]
+        return extracted_urls[:5]
+    else:
+        print("Error: Unable to fetch data from Google.")
+        return []
 
 if __name__ == "__main__":
     extracted = getTheLinks("Quien es donald trump")
     for i in range(5):
         print(extracted[i])
-
