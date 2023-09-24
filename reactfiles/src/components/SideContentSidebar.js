@@ -19,8 +19,8 @@ const SideContentSidebar = ({setSelectedTab, selectedTab}) => {
 	return (
 		<div className="side-content-sidebar">
 			<ul className="menu">
-				{tabs.map(tab => {
-					return <SideContentOption tab={tab} setSelectedTab={setSelectedTab} active={selectedTab.title==tab.title}/>
+				{tabs.map((tab, i) => {
+					return <SideContentOption key={i} tab={tab} setSelectedTab={setSelectedTab} active={selectedTab.title==tab.title}/>
 				})}
 			</ul>
 		</div>

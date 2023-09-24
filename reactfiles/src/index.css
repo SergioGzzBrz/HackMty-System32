@@ -144,12 +144,23 @@ nav a {
 .document-sidebar {
 	height: 100%;
 	min-width: 250px;
+	width: 250px;
 	background: var(--light-gray);
 	box-shadow: 5px 0 10px var(--shadow);
+	transition: all 150ms ease;
 }
 
-.document-sidebar h2 {
-	margin: 20px;
+.document-sidebar.contracted {
+	width: 60px;
+	min-width: 50px;
+	padding: 0;
+	margin: 0;
+}
+.document-sidebar.contracted h2 {
+	display: none;
+}
+.document-sidebar.contracted .document-list {
+	display: none;
 }
 
 .document-sidebar ul {
@@ -180,6 +191,7 @@ nav a {
 	align-items: center;
 	justify-content: flex-end;
 	padding-right: 20px;
+	gap: 10px;
 }
 
 .main-document .toolbar button {
@@ -203,9 +215,9 @@ nav a {
 }
 
 .subtitle-bar {
-	position: sticky;
+	/* position: sticky; */
 	top: 0;
-	width: calc(100% -15px);
+	width: 80%;
 	background: white;
 	margin-left: 20px;
 	font-weight: bold;
@@ -611,4 +623,65 @@ button.full-width:hover {
 	outline: none;
 	cursor: pointer;
 	font-size: 1rem;
+}
+
+.summary-para:first-child {
+	margin-top: 20px;
+}
+
+.notable {
+	position: relative;
+	transition: all 150ms ease;
+}
+
+.notable:hover {
+	padding-bottom: 50px;
+}
+
+.notable::after {
+	content: 'Note this paragraph';
+	position: absolute;
+	padding: 8px 10px;
+	background: var(--dark);
+	color: white;
+	border-radius: 5px;
+	bottom: 10px;
+	left: 0;
+	cursor: pointer;
+	transition: all 150ms ease;
+	opacity: 0;
+}
+
+.notable:hover::after {
+	opacity: 1;
+}
+
+.row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 20px;	
+}
+
+.hamburger {
+	/* background: red; */
+	width: 25px;
+	height: 20px;
+	position: relative;
+	cursor: pointer;
+}
+
+.hamburger span {
+	width: 25px;
+	height: 3px;
+	background: gray;
+	position: absolute;
+	top: 0;
+}
+
+.hamburger span:nth-child(2) {
+	top: 8px;
+}
+.hamburger span:nth-child(3) {
+	top: 16px;
 }

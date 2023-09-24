@@ -7,6 +7,7 @@ import PDFViewer from './PDFViewer';
 const MainDocument = () => {
 
 	const [fullDocumentView, setFullDocumentView] = useState(false);
+	const [notesEnabled, setNotesEnabled] = useState(false);
 	const {getSelected} = useSearchHistory();
 
 	const divideIntoParagraphs = () => {
@@ -30,6 +31,7 @@ const MainDocument = () => {
 	return (
 		<div className="main-document">
 			<div className="toolbar">
+				<button className={notesEnabled ? 'clicked' : ''} onClick={() => setNotesEnabled(prev => !prev)}><i className="fa-regular fa-note-sticky"></i> Enable Notes</button>
 				<button className={fullDocumentView ? 'clicked' : ''} onClick={() => setFullDocumentView(prev => !prev)}><i className="fa-regular fa-file"></i> {buttonText()}</button>
 			</div>
 			<div className="document-view">
@@ -39,7 +41,7 @@ const MainDocument = () => {
 						<div className='subtitle-bar'>Summary</div>
 						<div className="text-viewer">
 							{divideIntoParagraphs().map((para, i) => (
-								<p key={i} className="summary-para">{para}</p>
+								<p key={i} className={`summary-para ${notesEnabled ? 'notable':''}`}>{para}</p>
 							))}
 					</div></>
 				}
