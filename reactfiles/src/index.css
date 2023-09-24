@@ -13,6 +13,8 @@
 	--gray: #787A91;
 	--light-gray: #EEEEEE;
 	--shadow: #c1c1c1a8;
+	--accent: orange;
+	--accent-dark: rgb(130, 85, 0);
 	/* --light-gray: #eaeaea; */
 }
 
@@ -76,7 +78,7 @@ nav .searchbar {
 }
 
 .inputbar .button-other {
-	background: orange;
+	background: var(--accent);
 	color: white;
 	border-radius: 5px;
 	padding: 4px 10px;
@@ -90,7 +92,7 @@ nav .searchbar {
 	background: var(--dark)
 }
 .inputbar .button-other:hover {
-	background: rgb(160, 104, 0);
+	background: var(--accent-dark);
 }
 
 .searchbar-other {
@@ -492,7 +494,7 @@ button.full-width {
 	border: none;
 	border-radius: 10px;
 	font-size: 1rem;
-	background: orange;
+	background: var(--accent);
 	color: white;
 	margin-top: 20px;
 	cursor: pointer;
@@ -500,7 +502,7 @@ button.full-width {
 }
 
 button.full-width:hover {
-	background: rgb(163, 106, 0);
+	background: var(--accent-dark);
 }
 
 .linked-sources {
@@ -684,4 +686,27 @@ button.full-width:hover {
 }
 .hamburger span:nth-child(3) {
 	top: 16px;
+}
+
+.center {
+	align-items: center;
+	width: 100%;
+	flex-direction: column;
+}
+
+.login-input {
+	margin-top: 20px;
+	border: 1px solid black;
+}
+
+.button-mid {
+	background: var(--dark);
+	color: white;
+	border: none;
+	outline: none;
+	width: 270px;
+	height: 40px;
+	border-radius: 10px;
+	margin-top: 10px;
+	cursor: pointer;
 }
