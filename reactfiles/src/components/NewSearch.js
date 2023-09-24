@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import useSearchHistory from '../hooks/useSearchHistory';
 import DragDropFile from './DragDropFile';
 
 const NewSearch = () => {
 
+	const {searchHistory, setSearchHistory} = useSearchHistory();
 	const [selectedOption, setSelectedOption] = useState(0);
 
 	const [dragActive, setDragActive] = React.useState(false);
+	const [textArea, setTextArea] = useState("");
   
 	// handle drag events
 	const handleDrag = function(e) {
@@ -27,6 +30,47 @@ const NewSearch = () => {
 		// handleFiles(e.dataTransfer.files);
 		}
 	};
+
+	const changeTextArea = (e) => {
+		setTextArea(e.target.value);
+	}
+
+	const submitText = async () => {
+		const response = await fetch("http://localhost:105/text-api", {
+			method: "POST",
+			mode: "cors",
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				text: textArea
+			})
+		});
+		const json = await response.json();
+		const newsearch = {
+			title: json.title,
+			summary: json.summary,
+			keywords: json.keywords,
+			topics: json.topics,
+			links: json.links,
+			questions: [],
+			notes: "",
+			full: {
+				text: textArea,
+				type: "text"
+			}
+		};
+		setSearchHistory(() => {
+			return {
+				searches: [
+					...searchHistory.searches,
+					newsearch
+				],
+				selected: searchHistory.searches.length,
+				creating: false,
+			}
+		})
+		}
 
 	return (
 		<div className="container-center newsearch-container">
@@ -50,16 +94,6 @@ const NewSearch = () => {
 				</div>
 			</div>
 			{selectedOption == 0 && <>
-				{/* <form id="dragdrop-file" onDragEnter={handleDrag} onDrop={handleDrop} onSubmit={(e) => e.preventDefault()}>
-					<input type="file" id="input-file-upload" multiple={false} accept=".pdf"/>
-					<label for="input-file-upload">
-						<div className="dragdrop">
-							<i className="fa-solid fa-file-arrow-up"></i>
-							<p className="bigger">Drag and drop a PDF</p>
-							<p className="smaller">Or click to select a file from your device</p>
-						</div>
-					</label>
-				</form> */}
 				<DragDropFile />
 			</>}
 			{selectedOption == 1 && <>
@@ -72,8 +106,8 @@ const NewSearch = () => {
 			</>}
 			{selectedOption == 2 && <>
 				<br />
-				<textarea className="textsearch" placeholder="Copy &amp; Paste your text into here"></textarea>
-				<button className="full-width">Search this text</button>
+				<textarea className="textsearch" placeholder="Copy &amp; Paste your text into here" onChange={changeTextArea} value={textArea}></textarea>
+				<button onClick={submitText} className="full-width">Search this text</button>
 			</>}
 
 		</div>

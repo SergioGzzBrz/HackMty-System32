@@ -1,17 +1,17 @@
 import SearchBar from './SearchBar';
 
-const Navbar = () => {
+const Navbar = ({logged, setLogged}) => {
 	return (
 		<nav>
 			<div className="left">
-				<h2 className="brand">FRIDA</h2>
-				<SearchBar />
+				<h2 className="brand">HeyAI</h2>
+				{logged && <SearchBar />}
 			</div>
 			<div className="right">
 				<a href="#">About us</a>
 				<div className="user">
-					<a href="#">Sign out</a>
-					<i className="fa-solid fa-circle-user" />
+					{logged && <><a href="#" onClick={() => setLogged(false)}>Sign out</a>
+					<i className="fa-solid fa-circle-user" /></>}
 				</div>
 			</div>
 		</nav>
