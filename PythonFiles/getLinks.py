@@ -42,7 +42,7 @@ def getTheLinks(text):
     links = final_urls
     filtered_links = [link for link in links if link.startswith("/url?q=")]
     extracted_urls = [link.split('=')[1].split('&')[0] for link in filtered_links]
-    return extracted_urls
+    return extracted_urls[:5]
     # for i in range(len(extracted_urls)):
      #   print(i, extracted_urls[i])
 
