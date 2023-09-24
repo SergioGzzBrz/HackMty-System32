@@ -69,7 +69,8 @@ def getTheText(text):
 
    # print(len(final_text))
    # print(final_text)
-    return final_text[300:min(5000, len(final_text) - 1)]
+    final= final_text.replace('\n', '') 
+    return final[300:min(5000, len(final) - 1)]
 
 
 if __name__ == "__main__":
@@ -91,4 +92,3 @@ if __name__ == "__main__":
         print(long_paragraphs[i])
 
     # print(paragraphs[2])'''
-
