@@ -7,6 +7,10 @@ from softtek_llm.vectorStores import PineconeVectorStore
 from softtek_llm.embeddings import OpenAIEmbeddings
 from softtek_llm.schemas import Filter
 from dotenv import load_dotenv
+import json
+
+all_responses = []
+
 
 load_dotenv()
 OPENAI_API_KEY = "6b25369971534252bbcee5e488ce59f1"
@@ -69,47 +73,58 @@ filters = [
     )
     
 ]
-def summaryze(chatbot,input):
-
-
-    response = chatbot.chat(
-    input,
-    print_cache_score=True,
-    )
-    print("\n\n")
-    print(response)
-    
-def inform(chatbot,input):
-    
-    response = chatbot.chat(
-    input,
-    print_cache_score=True,
-    )
-    print(response)
-
 chatbot_inform = Chatbot(
     model=model,
     description="You are a nice and helpful tool made to inform about any subject asked in a short yet complete way. Give less than 200 words please.",
     filters=filters,
     cache=cache,
-    verbose=True,
+    verbose=False,
+    cache_probability=0.5
     )
 chatbot_summarize = Chatbot(
     model=model,
     description="You are a very helpful tool to summarize information when given.  ",
     filters=filters,
     cache=cache,
-    verbose=True,
+    verbose=False,
     )
 
+def summarize(chatbot, input_text):
+    response = chatbot.chat(
+        input_text,
+        print_cache_score=False,
+    )
+    print("\n\n")
+    print(response.message.content)
+    all_responses.append(response.message.content)
+    
+
+    
+def inform(chatbot,input):
+    
+    response = chatbot.chat(
+    input,
+    print_cache_score=False,
+    )
+    print(response.message.content)
+    all_responses.append(response.message.content)
+
+def video(link):
+    input_text= getTranscript.getTrans(link)
+    summarize(chatbot_summarize,input_text)
+
+
 input_text = input("give me something to summarize \n")
-summaryze(chatbot_summarize,input_text)
+summarize(chatbot_summarize,input_text)
 
 input_text = input("Hello, ask me anything \n")
 inform(chatbot_inform,input_text)
 
-input_text= getTranscript.getTrans("https://www.youtube.com/watch?v=KOdfpbnWLVo")
-summaryze(chatbot_summarize,input_text)
+
+with open('./PythonFiles/responses.json','w',encoding='latin-1') as f:
+    json.dump(all_responses,f)
+    
+video("https://www.youtube.com/watch?v=KOdfpbnWLVo")
 
 
 
