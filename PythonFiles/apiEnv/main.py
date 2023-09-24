@@ -14,8 +14,6 @@ import json
 import chatgpt
 import getKeyWords
 import getLinks
-import getSummary
-import getTextFromPdf
 import getTextFromPdf
 import getTranscript
 import getTextFromPage
