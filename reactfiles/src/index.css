@@ -577,7 +577,7 @@ button.full-width:hover {
 	display: flex;
 	flex-direction: column;
 	margin-top: 10px;
-	height: 500px;
+	/* height: 500px; */
 }
 
 .chat-bubbles {
@@ -610,6 +610,7 @@ button.full-width:hover {
 	border-top: 1px solid gray;
 	border-radius: 0;
 	padding: 10px 5px;
+	margin-top: 10px;
 }
 
 .inputbar-full input {
@@ -637,11 +638,10 @@ button.full-width:hover {
 }
 
 .notable:hover {
-	padding-bottom: 50px;
+	padding-bottom: 100px;
 }
 
-.notable::after {
-	content: 'Note this paragraph';
+.notable span.note-this {
 	position: absolute;
 	padding: 8px 10px;
 	background: var(--dark);
@@ -654,7 +654,7 @@ button.full-width:hover {
 	opacity: 0;
 }
 
-.notable:hover::after {
+.notable span {
 	opacity: 1;
 }
 
@@ -709,4 +709,11 @@ button.full-width:hover {
 	border-radius: 10px;
 	margin-top: 10px;
 	cursor: pointer;
+}
+
+.note-editor {
+	width: 100%;
+	border: none;
+	resize: vertical;
+	outline: none;
 }

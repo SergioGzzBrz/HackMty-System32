@@ -4,7 +4,7 @@ const Navbar = ({logged, setLogged}) => {
 	return (
 		<nav>
 			<div className="left">
-				<h2 className="brand">HeyAI</h2>
+				<h2 className="brand">cerebrAI</h2>
 				{logged && <SearchBar />}
 			</div>
 			<div className="right">

@@ -1,19 +1,18 @@
+import { useEffect, useState } from 'react';
 import useSearchHistory from '../../hooks/useSearchHistory';
 
 const Notes = () => {
 
-	const {getSelected} = useSearchHistory();
+	const {getSelected, searchHistory, setSearchHistory} = useSearchHistory();
+	const [notes, setNotes] = useState("");
 
-	const divideIntoParagraphs = () => {
-		const text = getSelected().notes;
-		return text.split('\n');
+	const onChange = (e) => {
+		setNotes(e.target.value);
 	}
 
 	return (
 		<>
-			{divideIntoParagraphs().map((para, i) => (
-				<p key={i}>{para}</p>
-			))}
+			<textarea value={notes} onChange={onChange} className="note-editor" placeholder="Write your notes here"></textarea>
 		</>
 	);
 }

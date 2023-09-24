@@ -4,7 +4,7 @@ import re
 # Elimina signos de puntuacion
 def remove_punctuations(input_string):
     for tag in html_tags:
-        input_string = input_string.replace(tag, "")
+        input_string = input_string.replace(tag, " ")
 
     # Make a translation table that maps all punctuation characters to None
     translator = str.maketrans("", "", punctuation)
@@ -25,11 +25,25 @@ non_meaning_words = [" and ", " but ", " or ", " so ", " for ", " nor ", " yet "
                         " under ", " over ", " through ", " between ", " among ", " throughout ", " above ", " below ", " within ", " amongst ", " besides ", " about ", 
                         " against ", " along ", " around ", " behind ", " beneath ", " beside ", " between ", " beyond ", " during ", " inside ", " near ", " off ", 
                         " outside ", " round ", " throughout ", " till ", " toward ", " underneath ", " until ", " upon ", " whilst ", " whether ", " whereas ", 
-                        " without ","el", "la", "los", "las", "un", "una", "unos", "unas", "en", "de", "a", "por", "para", "con", "sin", "sobre", "bajo", "entre",
-                        "desde", "hacia", "hasta", "durante", "mediante", "según", "ante", "tras", "cual", "quien", "cuyo", "cuya", "lo", "le", "les", "me", "te", 
-                        "nos", "se", "mi", "tu", "su", "nuestro", "vuestro", "mío", "tuyo", "suyo", "nuestro", "vuestro", "suyo","y", "pero", "o", "ni", "porque", 
-                        "así que", "aunque", "desde", "hasta", "a pesar de", "a fin de que", "si", "a menos que", "mientras", "cuando", "como", "sin embargo", 
-                        "por lo tanto", "además", "en cambio", "por suerte", "no obstante", "a causa de", "en resumen", "por último", "es decir", "en otras palabras"]
+                        " without ", " it ", " the ", " I ", " you ", " he ", " she ", " it ", " we ", " they ", " me ", " you ", " him ", " her ", " us ", " them ", " myself ", " yourself ", 
+                        " himself", " herself ", " itself ", " ourselves ", " yourselves ", " themselves ", " mine ", " yours ", " his ", " hers ", " its ", " ours ", " theirs ", 
+                        " my", " your ", " his ", " her ", " its ", " our ", " their ", " whose ", " who ", " whom ", " which ", " what ", " whosever ", " whoever ", " whomever ", 
+                        " whichever", " whatever ", " is ", " that ", " be ", " have ", " do ", " say ", " get ", " make ", " go ", " know ", " take ", " see ", " come ", " think ", 
+                        " look", " want ", " give ", " use ", " find ", " tell ", " ask ", " work ", " seem ", " feel ", " try ", " leave ", " call ", " need ", " feel ", " become ", 
+                        " leave", " put ", " mean ", " keep ", " let ", " begin ", " seem ", " help ", " talk ", " turn ", " start ", " show ", " hear ", " play ", " run ", " move ", 
+                        " like", " live ", " believe ", " hold ", " bring ", " can ", " the ", " of ", " and ", " to ", " in ", " is ", " it ", " you ", " that ", " he ", " was ", " for ", 
+                        " on", " are ", " with ", " as ", " I ", " his ", " they ", " be ", " at ", " one ", " have ", " this ", " from ", " or ", " had ", " by ", " not ", " word ", " but ", 
+                        " what", " some ", " we ", " can ", " out ", " other ", " were ", " all ", " there ", " when ", " up ", " use ", " your ", " how ", " said ", " an ", " each ", " she ", 
+                        " which", " do ", " their ", " time ", " if ", " will ", " way ", " about ", " many ", " then ", " them ", " write ", " would ", " like ", " so ", " these ", " her ", 
+                        " long", " make ", " thing ", " see ", " him ", " two ", " has ", " look ", " more ", " day ", " could ", " go ", " come ", " did ", " no ", " most ", " my ", " over ", 
+                        " know", " than ", " call ", " first ", " who ", " may ", " down ", " side ", " been ", " now ", " find ", " any ", " new ", " work ", " part ", " take ", " get ", 
+                        " place", " made ", " live ", " where ", " after ", " back ", " little ", " only ", " round ", " came ", " every ", " good ", " me ", " give ", " our ", " under ", 
+                        " name "]
+# ,"el", "la", "los", "las", "un", "una", "unos", "unas", "en", "de", "a", "por", "para", "con", "sin", "sobre", "bajo", "entre",
+#                         "desde", "hacia", "hasta", "durante", "mediante", "según", "ante", "tras", "cual", "quien", "cuyo", "cuya", "lo", "le", "les", "me", "te", 
+#                         "nos", "se", "mi", "tu", "su", "nuestro", "vuestro", "mío", "tuyo", "suyo", "nuestro", "vuestro", "suyo","y", "pero", "o", "ni", "porque", 
+#                         "así que", "aunque", "desde", "hasta", "a pesar de", "a fin de que", "si", "a menos que", "mientras", "cuando", "como", "sin embargo", 
+#                         "por lo tanto", "además", "en cambio", "por suerte", "no obstante", "a causa de", "en resumen", "por último", "es decir", "en otras palabras"]
 
 
 html_tags = ['<a>', '<abbr>', '<address>', '<area>', '<article>', '<aside>', '<audio>', '<b>', '<base>', '<bdi>', '<bdo>', '<blockquote>', '<body>', '<br>', '<button>', 
@@ -51,7 +65,7 @@ html_tags = ['<a>', '<abbr>', '<address>', '<area>', '<article>', '<aside>', '<a
 
 def remove_unmeaninful(input_string) :
     for word in non_meaning_words :
-        input_string = input_string.replace(word, "")
+        input_string = input_string.replace(word, " ")
     return input_string
 
 
@@ -76,4 +90,9 @@ def getKeyWords(text) :
     if '' in ocurrences:
         ocurrences.pop('')
 
-    return ocurrences
+    ocurrences = dict(sorted(ocurrences.items(), key=lambda item: item[1], reverse=True))
+    return list(ocurrences.keys())
+
+
+# txt = "this a dfs fd the hte the the this fu fu fu fu"
+# print(list(getKeyWords(txt)))

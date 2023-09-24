@@ -12,8 +12,8 @@ export const SearchHistoryProvider = ({children, username}) => {
 
 	const updateSearchHistory = (data) => {
 		setSearchHistory(data);
-		const db = getDatabase();
-		set(ref(db, 'users/' + username), {searches: data.searches});
+		// const db = getDatabase();
+		// set(ref(db, 'users/' + username), {searches: data.searches});
 	}
 
 	return (

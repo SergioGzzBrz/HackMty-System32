@@ -69,19 +69,19 @@ def webpage_api():
     title = chatgpt.search(summary) 
     links = getTheLinks(title)
     
-    topics.replace("\n\n", "\n")
-    topics = topics.split("\n")
+    # topics.replace("\n\n", "\n")
+    # topics = topics.split("\n")
 
-    cont = 1
-    for topic in topics :
-        if topic == '': 
-            continue
-        pair = topic.split(": ")
-        if len(pair) == 1:
-            topics_dict["topic " + str(cont)] = pair
-        else :
-            topics_dict[pair[0]] = pair[1]
-        cont += 1
+    # cont = 1
+    # for topic in topics :
+    #     if topic == '': 
+    #         continue
+    #     pair = topic.split(": ")
+    #     if len(pair) == 1:
+    #         topics_dict["topic " + str(cont)] = pair
+    #     else :
+    #         topics_dict[pair[0]] = pair[1]
+    #     cont += 1
 
 
     return Response(
@@ -89,7 +89,7 @@ def webpage_api():
             "title": title,
             "summary" : summary,
             "keywords" : keywords,
-            "topics" : topics_dict, # Arreglo de diccionarios
+            "topics" : topics, # Arreglo de diccionarios
             "links" : links,
         }),
     )
@@ -116,26 +116,26 @@ def youtube_api():
     # Splitting topics into dicts
     topics_dict = dict()
     
-    topics.replace("\n\n", "\n")
-    topics = topics.split("\n")
+    # topics.replace("\n\n", "\n")
+    # topics = topics.split("\n")
 
-    cont = 1
-    for topic in topics :
-        if topic == '': 
-            continue
-        pair = topic.split(": ")
-        if len(pair) == 1:
-            topics_dict["topic " + str(cont)] = pair
-        else :
-            topics_dict[pair[0]] = pair[1]
-        cont += 1
+    # cont = 1
+    # for topic in topics :
+    #     if topic == '': 
+    #         continue
+    #     pair = topic.split(": ")
+    #     if len(pair) == 1:
+    #         topics_dict["topic " + str(cont)] = pair
+    #     else :
+    #         topics_dict[pair[0]] = pair[1]
+    #     cont += 1
 
     return Response(
         response=json.dumps({
             "title": title,
             "summary" : summary,
             "keywords" : keywords,
-            "topics" : topics_dict, # Arreglo de diccionarios
+            "topics" : topics, # Arreglo de diccionarios
             "links" : links,
         }),
     )
@@ -146,12 +146,17 @@ def google_search_api():
     request_data = request.get_json()
 
     google_search = ""
-
     if request_data:
         if 'google_search' in request_data:
             google_search = request_data['google_search']
     google_search = google_search.replace("\n", "")
+    links = getTheLinks(google_search)
+    text=''
+
     text = getTheText(links[0])
+    print("Este es el link 0: ")
+    print(links[0])
+    print(text)
     summary = chatgpt.summarize(text)
     keywords = getKeyWords.getKeyWords(text)
     topics = chatgpt.topics(text)
@@ -162,19 +167,19 @@ def google_search_api():
     # Splitting topics into dicts
     topics_dict = dict()
     
-    topics.replace("\n\n", "\n")
-    topics = topics.split("\n")
+    # topics.replace("\n\n", "\n")
+    # topics = topics.split("\n")
 
-    cont = 1
-    for topic in topics :
-        if topic == '': 
-            continue
-        pair = topic.split(": ")
-        if len(pair) == 1:
-            topics_dict["topic " + str(cont)] = pair
-        else :
-            topics_dict[pair[0]] = pair[1]
-        cont += 1
+    # cont = 1
+    # for topic in topics :
+    #     if topic == '': 
+    #         continue
+    #     pair = topic.split(": ")
+    #     if len(pair) == 1:
+    #         topics_dict["topic " + str(cont)] = pair
+    #     else :
+    #         topics_dict[pair[0]] = pair[1]
+    #     cont += 1
 
 
     return Response(
@@ -182,7 +187,7 @@ def google_search_api():
             "title": title,
             "summary" : summary,
             "keywords" : keywords,
-            "topics" : topics_dict, # Arreglo de diccionarios
+            "topics" : topics, # Arreglo de diccionarios
             "links" : links,
         }),
     )
@@ -208,19 +213,19 @@ def text_api():
     # Splitting topics into dicts
     topics_dict = dict()
 
-    topics.replace("\n\n", "\n")
-    topics = topics.split("\n")
+    # topics.replace("\n\n", "\n")
+    # topics = topics.split("\n")
 
-    cont = 1
-    for topic in topics :
-        if topic == '': 
-            continue
-        pair = topic.split(": ")
-        if len(pair) == 1:
-            topics_dict["topic " + str(cont)] = pair
-        else :
-            topics_dict[pair[0]] = pair[1]
-        cont += 1
+    # cont = 1
+    # for topic in topics :
+    #     if topic == '': 
+    #         continue
+    #     pair = topic.split(": ")
+    #     if len(pair) == 1:
+    #         topics_dict["topic " + str(cont)] = pair
+    #     else :
+    #         topics_dict[pair[0]] = pair[1]
+    #     cont += 1
 
 
     return Response(
@@ -228,7 +233,7 @@ def text_api():
             "title": title,
             "summary" : summary,
             "keywords" : keywords,
-            "topics" : topics_dict, # Arreglo de diccionarios
+            "topics" : topics, # Arreglo de diccionarios
             "links" : links,
         }),
     )

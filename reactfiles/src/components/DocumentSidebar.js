@@ -19,6 +19,10 @@ const DocumentSidebar = () => {
 		});
 	}
 
+	const maxlength = (str, cap) => {
+		return str.slice(0, cap+1) + "...";
+	}
+
 	return (
 		<div className={`document-sidebar ${expanded ? '' : 'contracted'}`}>
 			<div className="row">
@@ -31,7 +35,7 @@ const DocumentSidebar = () => {
 			</div>
 			<ul className="document-list">
 				{searchHistory?.searches?.map((search, i) => {
-					return <li onClick={() => click(i)} key={i} className={`search-option ${searchHistory.selected == i ? 'active' : ''}`}>{search.title}</li>
+					return <li onClick={() => click(i)} key={i} className={`search-option ${searchHistory.selected == i ? 'active' : ''}`}>{maxlength(search.title, 28)}</li>
 				})}
 				<li onClick={newSearch} className={`search-option new-search ${searchHistory.creating ? 'active' : ''}`}>New Search &nbsp;<i className="fa-solid fa-add"></i></li>
 			</ul>

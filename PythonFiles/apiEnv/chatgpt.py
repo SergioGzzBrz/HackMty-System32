@@ -68,43 +68,42 @@ model = OpenAI(
 chatbot_inform = Chatbot(
     model=model,
     description="You are a nice and helpful tool made to inform about any subject asked in a short yet complete way. Give less than 200 words please.",
-    cache=cache,
+    
     verbose=False,
-    cache_probability=0.5
+    cache_probability=0.0
     )
 chatbot_topic = Chatbot(
     model=model,
-    description="You are a nice and helpful tool made to give the 3 most important topics of a given text. Tell only the 3 topics and their definition. Give every topic a quick title an it's definition (in example: 1-Location of city: The city is located (...))",
-    cache=cache,
+    description="You are a nice and helpful tool made to make a list of the 3 most important topics of a given text. Tell only the 3 topics and their definition in 15 words or less. Give every topic a quick title an it's definition (in example: 1-Location of city: The city is located in here. 2-History of city: It was built in the past. 3-Culture: The city exists.) Use \\n between each topic",
+    
     verbose=False,
-    cache_probability=0.5
+    cache_probability=0.0
     )
 
 chatbot_summarize = Chatbot(
     model=model,
     description="You are a nice and helpful tool made to summarize information when given text. Try to reduce by half the size of text, BUT if there are over 3000 words on the text, give AT MOST 1000 words. Make sure to REDUCE the quantity of words.  ",
-    cache=cache,
+    cache_probability=0.0,
     verbose=False,
     )
 chatbot_title = Chatbot(
     model=model,
-    description="You are a nice and helpful tool made to give a relevant and attractive title to the text given. Do not use rude language. Use only 10 words or less. ",
-    cache=cache,
+    description="You are a nice and helpful tool made to give a relevant and attractive title to the text given. Do not use rude language. Use only 5 words or less.Make it short. ",
+    
     verbose=False,
-    cache_probability=0.4
+    cache_probability=0.0
     )
 chatbot_links = Chatbot(
     model=model,
 description="You are a nice and helpful tool made to give ONLY internet links that are relevant to the given text separated by endlines. Make sure they are trusted sources and they exist. Give ONLY the 5 links AND make sure to FOLLOW the following example: https://page.com/relevant/  https://page2.com/relevant/ https://page3.com/relevant/ https://page4.com/relevant/ https://page5.com/relevant/ . Only give hyperlink, not a title, not an enumeration nor a description of what those links are. Just links separated by endlines.",
-    cache=cache,
+   
     verbose=False,
-    cache_probability=0.4
+    cache_probability=0.0
     )
 
 def summarize(input_text):
     response = chatbot_summarize.chat(
         input_text,
-        print_cache_score=False,
     )
     print("\n\n")
     content=response.message.content
@@ -116,7 +115,7 @@ def summarize(input_text):
 def topics(input_text):
     response = chatbot_topic.chat(
         input_text,
-        print_cache_score=False,
+        
     )
     print("\n\n")
     content=response.message.content
@@ -127,8 +126,7 @@ def topics(input_text):
     
 def inform(input):
     response = chatbot_inform.chat(
-    input,
-    print_cache_score=False,
+    input
     )
     content=response.message.content
     print(content)
@@ -145,8 +143,7 @@ def page(link):
 
 def search(input):
     response = chatbot_title.chat(
-        input,
-        print_cache_score=False,
+        input
     )
     print("\n\n")
     content=response.message.content
@@ -156,14 +153,17 @@ def search(input):
 
 def link(input):
     response = chatbot_links.chat(
-        input,
-        print_cache_score=False,
+        input
     )
     print("\n\n")
     content=response.message.content
     print(content)
     all_responses.append(response.message.content)
     return(content)
+
+with open('responses.json','w',encoding='latin-1') as f:
+      json.dump(all_responses,f)
+
 
 # input_text = input("give me something to summarize \n")
 # text = input_text.replace('\n', '') 
@@ -198,6 +198,3 @@ def link(input):
 # print('\n\n\n')
 
 # print(all_responses)
-
-# with open('./PythonFiles/responses.json','w',encoding='latin-1') as f:
-#     json.dump(all_responses,f)
