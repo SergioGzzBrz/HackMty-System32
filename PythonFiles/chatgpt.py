@@ -87,8 +87,8 @@ chatbot_summarize = Chatbot(
     verbose=False,
     )
 
-def summarize(chatbot, input_text):
-    response = chatbot.chat(
+def summarize(input_text):
+    response = chatbot_summarize.chat(
         input_text,
         print_cache_score=False,
     )
@@ -99,8 +99,8 @@ def summarize(chatbot, input_text):
     return(content)
     
     
-def topics(chatbot, input_text):
-    response = chatbot.chat(
+def topics(input_text):
+    response = chatbot_topic.chat(
         input_text,
         print_cache_score=False,
     )
@@ -111,8 +111,8 @@ def topics(chatbot, input_text):
     return(content)
 
     
-def inform(chatbot,input):
-    response = chatbot.chat(
+def inform(input):
+    response = chatbot_inform.chat(
     input,
     print_cache_score=False,
     )
@@ -123,24 +123,24 @@ def inform(chatbot,input):
 
 def video(link):
     input_text= getTranscript.getTrans(link)
-    return summarize(chatbot_summarize,input_text)
+    return summarize(input_text)
 
 def page(link):
     input_text=getTextFromPage.getTheText(link)
-    return summarize(chatbot_summarize,input_text)
+    return summarize(input_text)
 
 # input_text = input("give me something to summarize \n")
 # text = input_text.replace('\n', '') 
 txt="""El avión roquero (Ptyonoprogne rupestris) es una especie de ave que pertenece a la familia de los aviones y golondrinas. Mide alrededor de 14 cm de largo y tiene un plumaje de color marrón ceniza en la parte superior y más claro en la parte inferior. Su cola es corta y cuadrada, con manchas blancas en las plumas. Esta especie habita en las montañas del sur de Europa, el noroeste de África y el sur de Asia. Aunque se pueden confundir con otras especies similares, el avión roquero es de mayor tamaño, tiene manchas más notorias en la cola y su plumaje es de tono diferente.  La mayoría de los ejemplares en Europa son residentes, pero las poblaciones más al norte y en Asia son migratorias.
  Durante el invierno, migran hacia el norte de África, el Medio Oriente o la India. El avión roquero construye su nido en acantilados o en estructuras hechas por el hombre. El nido es de forma de media taza y está hecho de barro, con una capa interna suave de plumas y pasto seco. Por lo general, los nidos son individuales, aunque algunas parejas pueden anidar cerca una de la otra. La hembra pone de dos a cinco huevos blancos con manchas marrones, y tanto el macho como la hembra se encargan de incubarlos y alimentar a los polluelos. Esta especie se alimenta principalmente de insectos que captura en vuelo, cerca de las paredes de los acantilados o en prados alpinos. El avión roquero es presa de aves de presa y córvidos, y también alberga ácaros que se alimentan de su sangre. Afortunadamente, debido a su gran área de distribución y su población numerosa, no se considera una especie en peligro de extinción.
 """
-summarize(chatbot_summarize,txt)
+summarize(txt)
 
 # input_text = input("Hello, ask me anything \n")
 # text = input_text.replace('\n', '') 
 print('\n\n\n')
 txt="¿que es la vida?"
-inform(chatbot_inform,txt)
+inform(txt)
 
 
 # input_text = input("Give me the text from which I can give you their most important topics \n")
@@ -148,7 +148,7 @@ inform(chatbot_inform,txt)
 txt="""El avión roquero (Ptyonoprogne rupestris) es una especie de ave que pertenece a la familia de los aviones y golondrinas. Mide alrededor de 14 cm de largo y tiene un plumaje de color marrón ceniza en la parte superior y más claro en la parte inferior. Su cola es corta y cuadrada, con manchas blancas en las plumas. Esta especie habita en las montañas del sur de Europa, el noroeste de África y el sur de Asia. Aunque se pueden confundir con otras especies similares, el avión roquero es de mayor tamaño, tiene manchas más notorias en la cola y su plumaje es de tono diferente.  La mayoría de los ejemplares en Europa son residentes, pero las poblaciones más al norte y en Asia son migratorias.
  Durante el invierno, migran hacia el norte de África, el Medio Oriente o la India. El avión roquero construye su nido en acantilados o en estructuras hechas por el hombre. El nido es de forma de media taza y está hecho de barro, con una capa interna suave de plumas y pasto seco. Por lo general, los nidos son individuales, aunque algunas parejas pueden anidar cerca una de la otra. La hembra pone de dos a cinco huevos blancos con manchas marrones, y tanto el macho como la hembra se encargan de incubarlos y alimentar a los polluelos. Esta especie se alimenta principalmente de insectos que captura en vuelo, cerca de las paredes de los acantilados o en prados alpinos. El avión roquero es presa de aves de presa y córvidos, y también alberga ácaros que se alimentan de su sangre. Afortunadamente, debido a su gran área de distribución y su población numerosa, no se considera una especie en peligro de extinción.
 """
-topics(chatbot_topic,txt)
+topics(txt)
 print('\n\n\n')
 
 video("https://www.youtube.com/watch?v=KOdfpbnWLVo")
@@ -162,6 +162,3 @@ print(all_responses)
 with open('./PythonFiles/responses.json','w',encoding='latin-1') as f:
     json.dump(all_responses,f)
     
-
-
-
