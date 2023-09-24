@@ -25,7 +25,11 @@ non_meaning_words = [" and ", " but ", " or ", " so ", " for ", " nor ", " yet "
                         " under ", " over ", " through ", " between ", " among ", " throughout ", " above ", " below ", " within ", " amongst ", " besides ", " about ", 
                         " against ", " along ", " around ", " behind ", " beneath ", " beside ", " between ", " beyond ", " during ", " inside ", " near ", " off ", 
                         " outside ", " round ", " throughout ", " till ", " toward ", " underneath ", " until ", " upon ", " whilst ", " whether ", " whereas ", 
-                        " without "]
+                        " without ","el", "la", "los", "las", "un", "una", "unos", "unas", "en", "de", "a", "por", "para", "con", "sin", "sobre", "bajo", "entre",
+                        "desde", "hacia", "hasta", "durante", "mediante", "según", "ante", "tras", "cual", "quien", "cuyo", "cuya", "lo", "le", "les", "me", "te", 
+                        "nos", "se", "mi", "tu", "su", "nuestro", "vuestro", "mío", "tuyo", "suyo", "nuestro", "vuestro", "suyo","y", "pero", "o", "ni", "porque", 
+                        "así que", "aunque", "desde", "hasta", "a pesar de", "a fin de que", "si", "a menos que", "mientras", "cuando", "como", "sin embargo", 
+                        "por lo tanto", "además", "en cambio", "por suerte", "no obstante", "a causa de", "en resumen", "por último", "es decir", "en otras palabras"]
 
 
 html_tags = ['<a>', '<abbr>', '<address>', '<area>', '<article>', '<aside>', '<audio>', '<b>', '<base>', '<bdi>', '<bdo>', '<blockquote>', '<body>', '<br>', '<button>', 
@@ -46,7 +50,7 @@ html_tags = ['<a>', '<abbr>', '<address>', '<area>', '<article>', '<aside>', '<a
                 '</tr>', '</track>', '</u>', '</ul>', '</var>', '</video>', '</wbr>']
 
 def remove_unmeaninful(input_string) :
-    for word in non_meaning_words:
+    for word in non_meaning_words :
         input_string = input_string.replace(word, "")
     return input_string
 
@@ -69,6 +73,7 @@ def getKeyWords(text) :
             # Add the word to dictionary with count 1
             ocurrences[word] = 1
 
-    ocurrences.pop('')
+    if '' in ocurrences:
+        ocurrences.pop('')
 
     return ocurrences
