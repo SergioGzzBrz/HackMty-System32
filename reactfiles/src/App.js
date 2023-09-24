@@ -1,22 +1,19 @@
 import DocumentSidebar from './components/DocumentSidebar'
-import MainDocument from './components/MainDocument'
-import SideContent from './components/SideContent'
+import Content from './components/Content'
+import Navbar from './components/Navbar'
+import { SearchHistoryProvider } from './hooks/useSearchHistory';
 
-const App = () => {
-
-  fetch(encodeURI('http://127.0.0.1:8000/process-text-api?text=this is a sample text that has this words this this words words sample'))
-	.then(res => {
-		console.log(res);
-	});
-
+const App = () => {	
   return (
-    <div className="App">
-		<div className="app-container">
-			<DocumentSidebar />
-			<MainDocument />
-			<SideContent />
+	<SearchHistoryProvider>
+		<div className="app">
+			<Navbar />
+			<div className="app-container">
+				<DocumentSidebar />
+				<Content />
+			</div>
 		</div>
-    </div>
+	</SearchHistoryProvider>
   );
 }
 

@@ -1,11 +1,14 @@
 import {useState} from 'react';
 
 import SideContentSidebar from './SideContentSidebar'
+import Keywords from './tool_components/Keywords';
 
 const SideContent = () => {
 
 	const [selectedTab, setSelectedTab] = useState({
-		title: 'Keywords'
+		title: 'Keywords',
+		icon: 'fa-solid fa-book-open',
+		element: <Keywords />
 	});
 
 	return (
@@ -14,53 +17,11 @@ const SideContent = () => {
 				<h2 className="subtitle">{selectedTab.title}</h2>
 				<div className="side-content-container">
 					<div className="side-content-body">
-						<ul>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-							<li>Cosa</li>
-						</ul>
+						{selectedTab.element}
 					</div>
 				</div>
 			</div>
-			<SideContentSidebar setSelectedTab={setSelectedTab}/>
+			<SideContentSidebar selectedTab={selectedTab} setSelectedTab={setSelectedTab}/>
 		</div>
 	)
 }
