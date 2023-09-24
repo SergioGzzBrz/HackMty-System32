@@ -74,7 +74,7 @@ chatbot_inform = Chatbot(
     )
 chatbot_topic = Chatbot(
     model=model,
-    description="You are a nice and helpful tool made to give the 3 most important topics of a given text. Tell only the 3 topics and their definition, ordering by importance in the original subject.",
+    description="You are a nice and helpful tool made to give the 3 most important topics of a given text. Tell only the 3 topics and their definition. Give every topic a quick title an it's definition (in example: 1-Location of city: The city is located (...))",
     cache=cache,
     verbose=False,
     cache_probability=0.5
