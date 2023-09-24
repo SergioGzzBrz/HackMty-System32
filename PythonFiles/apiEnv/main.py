@@ -1,13 +1,3 @@
-# from flask import Flask, request
-
-# app = Flask(__name__)
-
-# @app.route('/form', methods=['POST'])
-# def form():
-#     username = request.form['username']
-#     password = request.form['password']
-#     return f'Hello {username}, your password is {password}'
-
 from flask import Flask, request, Response
 from flask_cors import CORS
 import json
@@ -77,12 +67,25 @@ def webpage_api():
     title = chatgpt.getTitle(summary) 
     links = getLinks.getTheLinks(title)
 
+    # Splitting topics into dicts
+    topics_dict = dict()
+    
+    topics.replace("\n\n", "\n")
+    topics = topics.split("\n")
+
+    for topic in topics :
+        if topic == '': 
+            continue
+        pair = topic.split(": ")
+        topics_dict[pair[0]] = pair[1]
+
+
     return Response(
         response=json.dumps({
             "title": title,
             "summary" : summary,
             "keywords" : keywords,
-            "topics" : topics, # Arreglo de diccionarios
+            "topics" : topics_dict, # Arreglo de diccionarios
             "links" : links,
         }),
     )
@@ -106,12 +109,24 @@ def youtube_api():
     title = chatgpt.getTitle(summary) 
     links = getLinks.getTheLinks(title)
 
+    # Splitting topics into dicts
+    topics_dict = dict()
+    
+    topics.replace("\n\n", "\n")
+    topics = topics.split("\n")
+
+    for topic in topics :
+        if topic == '': 
+            continue
+        pair = topic.split(": ")
+        topics_dict[pair[0]] = pair[1]
+
     return Response(
         response=json.dumps({
             "title": title,
             "summary" : summary,
             "keywords" : keywords,
-            "topics" : topics, # Arreglo de diccionarios
+            "topics" : topics_dict, # Arreglo de diccionarios
             "links" : links,
         }),
     )
@@ -136,12 +151,25 @@ def google_search_api():
 
     links.pop(0)
 
+    # Splitting topics into dicts
+    topics_dict = dict()
+    
+    topics.replace("\n\n", "\n")
+    topics = topics.split("\n")
+
+    for topic in topics :
+        if topic == '': 
+            continue
+        pair = topic.split(": ")
+        topics_dict[pair[0]] = pair[1]
+
+
     return Response(
         response=json.dumps({
             "title": title,
             "summary" : summary,
             "keywords" : keywords,
-            "topics" : topics, # Arreglo de diccionarios
+            "topics" : topics_dict, # Arreglo de diccionarios
             "links" : links,
         }),
     )
@@ -163,12 +191,25 @@ def text_api():
     title = chatgpt.getTitle(summary) 
     links = getLinks.getTheLinks(title)
 
+    # Splitting topics into dicts
+    topics_dict = dict()
+
+    topics.replace("\n\n", "\n")
+    topics = topics.split("\n")
+
+    for topic in topics :
+        if topic == '': 
+            continue
+        pair = topic.split(": ")
+        topics_dict[pair[0]] = pair[1]
+
+
     return Response(
         response=json.dumps({
             "title": title,
             "summary" : summary,
             "keywords" : keywords,
-            "topics" : topics, # Arreglo de diccionarios
+            "topics" : topics_dict, # Arreglo de diccionarios
             "links" : links,
         }),
     )

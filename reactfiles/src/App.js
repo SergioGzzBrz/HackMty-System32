@@ -1,10 +1,13 @@
 import DocumentSidebar from './components/DocumentSidebar'
+import Content from './components/Content'
+import Navbar from './components/Navbar'
+import { SearchHistoryProvider } from './hooks/useSearchHistory';
 import MainDocument from './components/MainDocument'
 import SideContent from './components/SideContent'
 
 import { useEffect, useState } from 'react'
 
-const App = () => {
+const App = () => {	
 
 	const [res, setRes] = useState();
 
@@ -37,15 +40,17 @@ const App = () => {
 	useEffect(() => {
 		console.log(res);
 	}, [res])
-
+	
   return (
-    <div className="App">
-		<div className="app-container">
-			<DocumentSidebar />
-			<MainDocument />
-			<SideContent />
+	<SearchHistoryProvider>
+		<div className="app">
+			<Navbar />
+			<div className="app-container">
+				<DocumentSidebar />
+				<Content />
+			</div>
 		</div>
-    </div>
+	</SearchHistoryProvider>
   );
 }
 
