@@ -79,7 +79,6 @@ def webpage_api():
         pair = topic.split(": ")
         topics_dict[pair[0]] = pair[1]
 
-
     return Response(
         response=json.dumps({
             "title": title,
