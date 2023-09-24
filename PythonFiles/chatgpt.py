@@ -1,4 +1,6 @@
 import getTranscript
+import getTextFromPage
+
 import os
 from softtek_llm.chatbot import Chatbot
 from softtek_llm.models import OpenAI
@@ -72,7 +74,7 @@ chatbot_inform = Chatbot(
     )
 chatbot_topic = Chatbot(
     model=model,
-    description="You are a nice and helpful tool made to give the 3 most important topics of a given text. Tell only the 3 topics and their definition based on the subject in a small paragraph.",
+    description="You are a nice and helpful tool made to give the 3 most important topics of a given text. Tell only the 3 topics and their definition, ordering by importance in the original subject.",
     cache=cache,
     verbose=False,
     cache_probability=0.5
@@ -123,6 +125,9 @@ def video(link):
     input_text= getTranscript.getTrans(link)
     return summarize(chatbot_summarize,input_text)
 
+def page(link):
+    input_text=getTextFromPage.getTheText(link)
+    return summarize(chatbot_summarize,input_text)
 
 # input_text = input("give me something to summarize \n")
 # text = input_text.replace('\n', '') 
@@ -133,6 +138,7 @@ summarize(chatbot_summarize,txt)
 
 # input_text = input("Hello, ask me anything \n")
 # text = input_text.replace('\n', '') 
+print('\n\n\n')
 txt="¿que es la vida?"
 inform(chatbot_inform,txt)
 
@@ -143,9 +149,19 @@ txt="""El avión roquero (Ptyonoprogne rupestris) es una especie de ave que pert
  Durante el invierno, migran hacia el norte de África, el Medio Oriente o la India. El avión roquero construye su nido en acantilados o en estructuras hechas por el hombre. El nido es de forma de media taza y está hecho de barro, con una capa interna suave de plumas y pasto seco. Por lo general, los nidos son individuales, aunque algunas parejas pueden anidar cerca una de la otra. La hembra pone de dos a cinco huevos blancos con manchas marrones, y tanto el macho como la hembra se encargan de incubarlos y alimentar a los polluelos. Esta especie se alimenta principalmente de insectos que captura en vuelo, cerca de las paredes de los acantilados o en prados alpinos. El avión roquero es presa de aves de presa y córvidos, y también alberga ácaros que se alimentan de su sangre. Afortunadamente, debido a su gran área de distribución y su población numerosa, no se considera una especie en peligro de extinción.
 """
 topics(chatbot_topic,txt)
+print('\n\n\n')
 
+video("https://www.youtube.com/watch?v=KOdfpbnWLVo")
+print('\n\n\n')
+
+page("https://www.nationalgeographic.com.es/animales/pinguinos")
+
+print('\n\n\n')
+print(all_responses)
 
 with open('./PythonFiles/responses.json','w',encoding='latin-1') as f:
     json.dump(all_responses,f)
     
-video("https://www.youtube.com/watch?v=KOdfpbnWLVo")
+
+
+
