@@ -19,7 +19,7 @@
 
 .document-sidebar {
 	height: 100%;
-	min-width: 300px;
+	min-width: 250px;
 	background: var(--light-gray);
 	box-shadow: 5px 0 10px #00000039;
 }
@@ -42,11 +42,117 @@
 .main-document {
 	height: 100%;
 	flex: 1;
-	/* background: blue; */
+	display: flex;
+	flex-direction: column;
+}
+
+.main-document .toolbar {
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	padding-right: 20px;
+}
+
+.main-document .toolbar button {
+	background: rgb(236, 236, 236);
+	color: black;
+	border-radius: 5px;
+	border: 1px solid rgba(0, 0, 0, 0.428);
+	outline: none;
+	padding: 5px;
+}
+
+.main-document .toolbar button.clicked {
+	background: rgb(206, 206, 206);
+	box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.499);
+}
+
+.main-document .document-view {
+	flex: 1;
+	overflow: auto;
+}
+
+.main-document .text-viewer {
+	padding: 0 20px 20px 20px;
+	overflow: auto;
+}
+
+.main-document .pdf-viewer {
+	width: 100%;
+	height: 100%;
 }
 
 .side-content {
 	height: 100%;
+	flex: 0.6;
+	background: var(--light-gray);
+	margin-left: 15px;
+	box-shadow: -5px 0 10px #00000039;
+	display: flex;
+}
+
+.side-content .content {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	height: 100%;
 	flex: 1;
-	/* background: green; */
+	padding: 20px;
+}
+
+.side-content h2 {
+	height: 20px;
+}
+
+.side-content .side-content-container {
+	flex: 1;
+	overflow: hidden;
+}
+
+.side-content .side-content-body {
+	background: white;
+	border-radius: 5px;
+	padding: 10px;
+	margin-top: 10px;
+	max-height: 100%;
+	overflow: auto;
+}
+
+.side-content .side-content-sidebar {
+	width: 60px;
+	background: var(--light-gray);
+}
+
+.side-content .side-content-sidebar .menu {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-top: 20px;
+	align-items: flex-start;
+}
+
+.side-content .side-content-sidebar .menu li {
+	background: white;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	list-style: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.2rem;
+	position: relative;
+}
+
+.side-content .side-content-sidebar .menu li:hover::after {
+	padding: 5px 10px;
+	background: black;
+	color: white;
+	border-radius: 5px;
+	font-size: 1rem;
+	content: attr(data-tooltip);
+	position: absolute;
+	left: 0;
+	transform: translateX(calc(-100% - 10px));
 }
