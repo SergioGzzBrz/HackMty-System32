@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="D:\A some files\Github\HackMty-System32\PythonFiles\apiEnv"
+VIRTUAL_ENV="D:\A some files\hacka2\HackMty-System32\PythonFiles\apiEnv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

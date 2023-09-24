@@ -1,13 +1,3 @@
-# from flask import Flask, request
-
-# app = Flask(__name__)
-
-# @app.route('/form', methods=['POST'])
-# def form():
-#     username = request.form['username']
-#     password = request.form['password']
-#     return f'Hello {username}, your password is {password}'
-
 from flask import Flask, request, Response
 from flask_cors import CORS
 import json
@@ -88,7 +78,6 @@ def webpage_api():
             continue
         pair = topic.split(": ")
         topics_dict[pair[0]] = pair[1]
-
 
     return Response(
         response=json.dumps({
