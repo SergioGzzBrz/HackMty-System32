@@ -1,6 +1,20 @@
+import useSearchHistory from '../../hooks/useSearchHistory';
+
 const Notes = () => {
+
+	const {getSelected} = useSearchHistory();
+
+	const divideIntoParagraphs = () => {
+		const text = getSelected().notes;
+		return text.split('\n');
+	}
+
 	return (
-		<p>Notes</p>
+		<>
+			{divideIntoParagraphs().map((para, i) => (
+				<p key={i}>{para}</p>
+			))}
+		</>
 	);
 }
 
