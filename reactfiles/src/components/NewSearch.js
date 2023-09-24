@@ -1,9 +1,32 @@
-import { useState } from 'react';
-import SearchBar from './SearchBar';
+import React, { useState } from 'react';
+import DragDropFile from './DragDropFile';
 
 const NewSearch = () => {
 
 	const [selectedOption, setSelectedOption] = useState(0);
+
+	const [dragActive, setDragActive] = React.useState(false);
+  
+	// handle drag events
+	const handleDrag = function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		if (e.type === "dragenter" || e.type === "dragover") {
+		setDragActive(true);
+		} else if (e.type === "dragleave") {
+		setDragActive(false);
+		}
+	};
+
+	const handleDrop = function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		setDragActive(false);
+		if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+		// at least one file has been dropped so do something
+		// handleFiles(e.dataTransfer.files);
+		}
+	};
 
 	return (
 		<div className="container-center newsearch-container">
@@ -27,11 +50,17 @@ const NewSearch = () => {
 				</div>
 			</div>
 			{selectedOption == 0 && <>
-				<div className="dragdrop">
-					<i className="fa-solid fa-file-arrow-up"></i>
-					<p className="bigger">Drag and drop a PDF</p>
-					<p className="smaller">Or click to select a file from your device</p>
-				</div>
+				{/* <form id="dragdrop-file" onDragEnter={handleDrag} onDrop={handleDrop} onSubmit={(e) => e.preventDefault()}>
+					<input type="file" id="input-file-upload" multiple={false} accept=".pdf"/>
+					<label for="input-file-upload">
+						<div className="dragdrop">
+							<i className="fa-solid fa-file-arrow-up"></i>
+							<p className="bigger">Drag and drop a PDF</p>
+							<p className="smaller">Or click to select a file from your device</p>
+						</div>
+					</label>
+				</form> */}
+				<DragDropFile />
 			</>}
 			{selectedOption == 1 && <>
 				<br />

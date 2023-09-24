@@ -376,17 +376,28 @@ li.search-option:hover {
 	font-size: 2.5rem;
 }
 
+#dragdrop-file {
+	width: 80%;
+	display: block;
+}
+
 .dragdrop {
 	margin-top: 20px;
 	height: 250px;
 	background: var(--light-gray);
 	border-radius: 20px;
 	border: 2px dashed gray;
-	width: 80%;
+	width: 100%;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 	justify-content: center;
+	cursor: pointer;
+	transition: all 150ms ease;
+}
+
+.dragdrop:hover {
+	background: rgb(225, 225, 225);
 }
 
 .dragdrop i {
@@ -395,7 +406,7 @@ li.search-option:hover {
 	color: var(--darker);
 }
 
-.dragdrop .bigger {
+.bigger {
 	font-size: 1.2rem;
 	color: var(--darker);
 	font-weight: bold;
@@ -485,4 +496,119 @@ button.full-width:hover {
 }
 .linked-sources li:not(:first-child) {
 	margin-top: 10px;
+}
+
+#input-file-upload {
+	display: none;
+}
+
+#form-file-upload {
+	height: 16rem;
+	width: 80%;
+	margin-top: 20px;
+	text-align: center;
+	position: relative;
+}
+
+#input-file-upload {
+	display: none;
+}
+
+#label-file-upload {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-width: 2px;
+	border-radius: 1rem;
+	border-style: dashed;
+	border-color: #cbd5e1;
+	background-color: #f8fafc;
+}
+
+#label-file-upload i {
+	font-size: 3rem;
+	color: var(--dark);
+}
+
+#label-file-upload.drag-active {
+	background-color: gray;
+}
+
+.upload-button {
+	cursor: pointer;
+	padding: 0.25rem;
+	font-size: 1rem;
+	border: none;
+	font-family: 'Oswald', sans-serif;
+	background-color: transparent;
+}
+
+.upload-button:hover {
+	text-decoration-line: underline;
+}
+
+#drag-file-element {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	border-radius: 1rem;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+}
+
+.chat-container {
+	display: flex;
+	flex-direction: column;
+	margin-top: 10px;
+	height: 500px;
+}
+
+.chat-bubbles {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.chat-bubble.gpt-response {
+	background: gray;
+	color: white;
+	padding: 10px 15px;
+	border-radius: 10px;
+	max-width: 90%;
+	margin-right: auto;
+}
+
+.chat-bubble:not(.gpt-response) {
+	background: var(--dark);
+	color: white;
+	padding: 10px 15px;
+	border-radius: 10px;
+	max-width: 90%;
+	margin-left: auto;
+}
+
+.inputbar-full {
+	width: 100%;
+	border-top: 1px solid gray;
+	border-radius: 0;
+	padding: 10px 5px;
+}
+
+.inputbar-full input {
+	width: 100%;
+}
+
+.showall {
+	color: blue;
+	text-decoration: underline;
+	float: right;
+	border: none;
+	background: none;
+	outline: none;
+	cursor: pointer;
+	font-size: 1rem;
 }
