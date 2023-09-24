@@ -64,8 +64,9 @@ def webpage_api():
     summary = chatgpt.summarize(text)
     keywords = getKeyWords.getKeyWords(text)
     topics = chatgpt.topics(text)
-    title = chatgpt.getTitle(summary) 
-    links = getLinks.getTheLinks(title)
+    title = chatgpt.search(summary) 
+    title = title.replace("\n", "")
+    links = chatgpt.link(title)
 
     # Splitting topics into dicts
     topics_dict = dict()
@@ -73,11 +74,17 @@ def webpage_api():
     topics.replace("\n\n", "\n")
     topics = topics.split("\n")
 
+    cont = 1
     for topic in topics :
         if topic == '': 
             continue
         pair = topic.split(": ")
-        topics_dict[pair[0]] = pair[1]
+        if len(pair) == 1:
+            topics_dict["topic " + str(cont)] = pair
+        else :
+            topics_dict[pair[0]] = pair[1]
+        cont += 1
+
 
     return Response(
         response=json.dumps({
@@ -105,20 +112,25 @@ def youtube_api():
     summary = chatgpt.summarize(text)
     keywords = getKeyWords.getKeyWords(text)
     topics = chatgpt.topics(text)
-    title = chatgpt.getTitle(summary) 
-    links = getLinks.getTheLinks(title)
-
+    title = chatgpt.search(summary) 
+    # title = title.replace("\n", "")
+    links = chatgpt.link(title)
     # Splitting topics into dicts
     topics_dict = dict()
     
     topics.replace("\n\n", "\n")
     topics = topics.split("\n")
 
+    cont = 1
     for topic in topics :
         if topic == '': 
             continue
         pair = topic.split(": ")
-        topics_dict[pair[0]] = pair[1]
+        if len(pair) == 1:
+            topics_dict["topic " + str(cont)] = pair
+        else :
+            topics_dict[pair[0]] = pair[1]
+        cont += 1
 
     return Response(
         response=json.dumps({
@@ -140,13 +152,13 @@ def google_search_api():
     if request_data:
         if 'google_search' in request_data:
             google_search = request_data['google_search']
-
-    links = getLinks.getTheLinks(google_search)
+    google_search = google_search.replace("\n", "")
+    links = chatgpt.link(google_search)
     text = getTextFromPage.getTheText(links[0])
     summary = chatgpt.summarize(text)
     keywords = getKeyWords.getKeyWords(text)
     topics = chatgpt.topics(text)
-    title = chatgpt.getTitle(summary) 
+    title = chatgpt.search(summary) 
 
     links.pop(0)
 
@@ -156,11 +168,16 @@ def google_search_api():
     topics.replace("\n\n", "\n")
     topics = topics.split("\n")
 
+    cont = 1
     for topic in topics :
         if topic == '': 
             continue
         pair = topic.split(": ")
-        topics_dict[pair[0]] = pair[1]
+        if len(pair) == 1:
+            topics_dict["topic " + str(cont)] = pair
+        else :
+            topics_dict[pair[0]] = pair[1]
+        cont += 1
 
 
     return Response(
@@ -187,8 +204,9 @@ def text_api():
     summary = chatgpt.summarize(text)
     keywords = getKeyWords.getKeyWords(text)
     topics = chatgpt.topics(text)
-    title = chatgpt.getTitle(summary) 
-    links = getLinks.getTheLinks(title)
+    title = chatgpt.search(summary) 
+    title = title.replace("\n", "")
+    links = chatgpt.link(title)
 
     # Splitting topics into dicts
     topics_dict = dict()
@@ -196,11 +214,16 @@ def text_api():
     topics.replace("\n\n", "\n")
     topics = topics.split("\n")
 
+    cont = 1
     for topic in topics :
         if topic == '': 
             continue
         pair = topic.split(": ")
-        topics_dict[pair[0]] = pair[1]
+        if len(pair) == 1:
+            topics_dict["topic " + str(cont)] = pair
+        else :
+            topics_dict[pair[0]] = pair[1]
+        cont += 1
 
 
     return Response(
