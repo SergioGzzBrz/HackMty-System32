@@ -74,7 +74,7 @@ def webpage_api():
     summary = chatgpt.summarize(text)
     keywords = getKeyWords.getKeyWords(text)
     topics = chatgpt.topics(text)
-    title = chatgpt.getTitle(summary) #! not done
+    title = chatgpt.getTitle(summary) 
     links = getLinks.getTheLinks(title)
 
     return Response(
@@ -103,7 +103,7 @@ def youtube_api():
     summary = chatgpt.summarize(text)
     keywords = getKeyWords.getKeyWords(text)
     topics = chatgpt.topics(text)
-    title = chatgpt.getTitle(summary) #! not done
+    title = chatgpt.getTitle(summary) 
     links = getLinks.getTheLinks(title)
 
     return Response(
@@ -132,7 +132,7 @@ def google_search_api():
     summary = chatgpt.summarize(text)
     keywords = getKeyWords.getKeyWords(text)
     topics = chatgpt.topics(text)
-    title = chatgpt.getTitle(summary) #! not done
+    title = chatgpt.getTitle(summary) 
 
     links.pop(0)
 
@@ -160,7 +160,7 @@ def text_api():
     summary = chatgpt.summarize(text)
     keywords = getKeyWords.getKeyWords(text)
     topics = chatgpt.topics(text)
-    title = chatgpt.getTitle(summary) #! not done
+    title = chatgpt.getTitle(summary) 
     links = getLinks.getTheLinks(title)
 
     return Response(

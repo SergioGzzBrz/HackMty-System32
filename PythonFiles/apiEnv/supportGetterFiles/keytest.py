@@ -1,15 +1,28 @@
-from getKeyWords import getKeyWords
+# from getKeyWords import getKeyWords
 
-text = """
-Esta es una prueba
-que yo yo yo yo me encanta. pero .dsa.
-eso .sda samir
-<h1>fasd</h1>
-<h1>fasd </h1>
-<h1> fasd</h1>
-<h1> fasd </h1>
+# text = """
+# Esta es una prueba
+# que yo yo yo yo me encanta. pero .dsa.
+# eso .sda samir
+# <h1>fasd</h1>
+# <h1>fasd </h1>
+# <h1> fasd</h1>
+# <h1> fasd </h1>
+# """
+
+# res = getKeyWords(text)
+
+# print(res)
+
+topics = """
+
 """
 
-res = getKeyWords(text)
+topics_dict = dict()
 
-print(res)
+topics.replace("\n\n", "\n")
+topics.split("\n")
+
+for topic in topics :
+    pair = topic.split(": ")
+    topics_dict[pair[0]] = pair[1]
