@@ -2,6 +2,10 @@ import DocumentSidebar from './components/DocumentSidebar'
 import Content from './components/Content'
 import Navbar from './components/Navbar'
 import { SearchHistoryProvider } from './hooks/useSearchHistory';
+import MainDocument from './components/MainDocument'
+import SideContent from './components/SideContent'
+
+import { useEffect, useState } from 'react'
 
 const App = () => {	
   return (
