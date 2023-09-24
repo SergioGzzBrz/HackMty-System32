@@ -69,26 +69,26 @@ def getTheText(text):
 
    # print(len(final_text))
    # print(final_text)
-    return final_text[300:min(5000, len(final_text) - 1)]
+    final= final_text.replace('\n', '') 
+    return final[300:min(5000, len(final) - 1)]
 
 
 if __name__ == "__main__":
     extracted = getTheText("https://es.wikipedia.org/wiki/Donald_Trump")
     # https://www.genbeta.com/actualidad/proyecto-gutenberg-tiene-5-000-audiolibros-nuevos-que-puedes-escuchar-gratis-ha-hecho-inteligencia-artificial
     # extracted = getTheText("https://www.genbeta.com/actualidad/proyecto-gutenberg-tiene-5-000-audiolibros-nuevos-que-puedes-escuchar-gratis-ha-hecho-inteligencia-artificial")
-    print(extracted)
-    print(len(extracted))
-    '''print("tamano final de extracted", len(extracted))
-    # print(paragraphs[0])
-    print("tamano de parrafos ddd final",len(paragraphs))'''
-    '''for i in range(len(paragraphs)):
-        print(len(paragraphs[i]))'''
+    # print(extracted)
+    # print(len(extracted))
+    # '''print("tamano final de extracted", len(extracted))
+    # # print(paragraphs[0])
+    # print("tamano de parrafos ddd final",len(paragraphs))'''
+    # '''for i in range(len(paragraphs)):
+    #     print(len(paragraphs[i]))'''
 
-    '''
-    print("tamano de parrafos ddd final 2", len(long_paragraphs))
+    # '''
+    # print("tamano de parrafos ddd final 2", len(long_paragraphs))
 
-    for i in range(len(long_paragraphs)):
-        print(long_paragraphs[i])
+    # for i in range(len(long_paragraphs)):
+    #     print(long_paragraphs[i])
 
-    # print(paragraphs[2])'''
-
+    # # print(paragraphs[2])'''
