@@ -59,27 +59,6 @@ def json_example():
     )
 
 
-
-@app.route('/query-example')
-def query_example(): 
-    # if key doesn't exist, returns None
-    language = request.args.get('language')
-    # language = "#"
-
-    # if key doesn't exist, returns a 400, bad request error
-    # framework = request.args['framework']
-    framework = "gjos"
-
-    # if key doesn't exist, returns None
-    # website = request.args.get('website')
-    website = "fasd"
-
-    return '''
-            <h1>The language value is: {}</h1>
-            <h1>The framework value is: {}</h1>
-            <h1>The website value is: {}'''.format(language, framework, website)
-
-
 # Funcion para paginas
 @app.route('/webpage-api', methods=['POST'])
 def webpage_api():
@@ -93,7 +72,7 @@ def webpage_api():
 
     text = getTextFromPage.getTheText(link) 
     summary = chatgpt.summary(text)
-    keywords = getKeyWords.getKeyWords(text) #! not done
+    keywords = getKeyWords.getKeyWords(text)
     topics = chatgpt.topics(text)
     search = chatgpt.search(summary) #! not done
     links = getLinks.getTheLinks(search)
@@ -123,7 +102,7 @@ def youtube_api():
 
     text = getTranscript.getTrans(link) 
     summary = chatgpt.summary(text)
-    keywords = getKeyWords.getKeyWords(text) #! not done
+    keywords = getKeyWords.getKeyWords(text)
     topics = chatgpt.topics(text)
     search = chatgpt.search(summary) #! not done
     links = getLinks.getTheLinks(search)
@@ -153,7 +132,7 @@ def google_search_api():
     links = getLinks.getTheLinks(google_search)
     text = getTextFromPage.getTheText(links[0])
     summary = chatgpt.summary(text)
-    keywords = getKeyWords.getKeyWords(text) #! not done
+    keywords = getKeyWords.getKeyWords(text)
     topics = chatgpt.topics(text)
     title = chatgpt.getTitle(summary) #! not done
 
@@ -181,7 +160,7 @@ def text_api():
             text = request_data['text']
 
     summary = chatgpt.summary(text)
-    keywords = getKeyWords.getKeyWords(text) #! not done
+    keywords = getKeyWords.getKeyWords(text)
     topics = chatgpt.topics(text)
     search = chatgpt.search(summary) #! not done
     links = getLinks.getTheLinks(search)
