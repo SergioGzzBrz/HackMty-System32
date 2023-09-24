@@ -1,7 +1,28 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from json import dumps
 import string
 app = FastAPI()
+
+
+origins = [
+    "http://localhost",
+    "localhost",
+    "http://localhost:3000",
+    "localhost:3000",
+]
+
+methods = ["GET", "POST", "PUT", "DELETE"]
+
+headers = ["Content-Type", "Authorization"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=methods,
+    allow_headers=headers,
+)
 
 
 def remove_some_words(input_string):

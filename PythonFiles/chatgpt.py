@@ -1,3 +1,4 @@
+import getTranscript
 import os
 from softtek_llm.chatbot import Chatbot
 from softtek_llm.models import OpenAI
@@ -59,29 +60,56 @@ model = OpenAI(
 )
 filters = [
     Filter(
-        type="DENY",
-        case="ANYTHING about investing in crypto. YOU CANNOT talk about investing in web3.0.",
+        type="ALLOW",
+        case="AVOID ANYTHING about investing in crypto. YOU CANNOT talk about investing in web3.0.",
     ),
     Filter(
-        type="DENY",
-        case="ANYTHING about wars, epidemics and tragedies being good. YOU CANNOT defend nor talk good about a tragidy. Give factual information only, while noting how bad they were.",
+        type="ALLOW",
+        case="AVOID ANYTHING about wars, epidemics and tragedies being good. YOU CANNOT defend nor talk good about a tragidy. Give factual information only, while noting how bad they were.",
     )
     
 ]
+def summaryze(chatbot,input):
 
 
-input_text = input("Hello, ask me anything, or give me something to summarize :)")
+    response = chatbot.chat(
+    input,
+    print_cache_score=True,
+    )
+    print("\n\n")
+    print(response)
+    
+def inform(chatbot,input):
+    
+    response = chatbot.chat(
+    input,
+    print_cache_score=True,
+    )
+    print(response)
 
-chatbot = Chatbot(
+chatbot_inform = Chatbot(
     model=model,
-    description="You are a very helpful tool to summarize information when givem. You give extra information fron the internet if asked, as well as other links or places to find more information. If asked, you can give key words of the subject. ",
+    description="You are a nice and helpful tool made to inform about any subject asked in a short yet complete way. Give less than 200 words please.",
     filters=filters,
     cache=cache,
     verbose=True,
-)
+    )
+chatbot_summarize = Chatbot(
+    model=model,
+    description="You are a very helpful tool to summarize information when given.  ",
+    filters=filters,
+    cache=cache,
+    verbose=True,
+    )
 
-response = chatbot.chat(
-    input_text,
-    print_cache_score=True,
-)
-print(response)
+input_text = input("give me something to summarize \n")
+summaryze(chatbot_summarize,input_text)
+
+input_text = input("Hello, ask me anything \n")
+inform(chatbot_inform,input_text)
+
+input_text= getTranscript.getTrans("https://www.youtube.com/watch?v=KOdfpbnWLVo")
+summaryze(chatbot_summarize,input_text)
+
+
+
