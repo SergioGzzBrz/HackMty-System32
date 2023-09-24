@@ -1,3 +1,4 @@
+import getTranscript
 import os
 from softtek_llm.chatbot import Chatbot
 from softtek_llm.models import OpenAI
@@ -16,11 +17,11 @@ OPENAI_API_BASE = "https://openaistkinno.openai.azure.com/"
 if OPENAI_API_BASE is None:
     raise ValueError("OPENAI_API_BASE not found in .env file")
 
-OPENAI_EMBEDDINGS_MODEL_NAME = "InnovationGPT2"
+OPENAI_EMBEDDINGS_MODEL_NAME = "OpenAIEmbeddings"
 if OPENAI_EMBEDDINGS_MODEL_NAME is None:
     raise ValueError("OPENAI_EMBEDDINGS_MODEL_NAME not found in .env file")
 
-OPENAI_CHAT_MODEL_NAME = "OpenAIEmbeddings"
+OPENAI_CHAT_MODEL_NAME = "InnovationGPT2"
 if OPENAI_CHAT_MODEL_NAME is None:
     raise ValueError("OPENAI_CHAT_MODEL_NAME not found in .env file")
 PINECONE_API_KEY = "1b119593-845e-4207-a077-f179d5c256e1"
@@ -59,45 +60,56 @@ model = OpenAI(
 )
 filters = [
     Filter(
-        type="DENY",
-        case="ANYTHING about the Titanic. YOU CANNOT talk about the Titanic AT ALL.",
+        type="ALLOW",
+        case="AVOID ANYTHING about investing in crypto. YOU CANNOT talk about investing in web3.0.",
     ),
     Filter(
-        type="DENY",
-        case="ANYTHING about investing in crypto. YOU CANNOT talk about investing in web3.0.",
-    ),
-    Filter(
-        type="DENY",
-        case="ANYTHING about wars, epidemics and tragedies being good. YOU CANNOT defend nor talk good about a tragidy. Give factual information only, while noting how bad they were.",
+        type="ALLOW",
+        case="AVOID ANYTHING about wars, epidemics and tragedies being good. YOU CANNOT defend nor talk good about a tragidy. Give factual information only, while noting how bad they were.",
     )
     
 ]
+def summaryze(chatbot,input):
 
 
-input_text = input("Hello, ask me anything, or give me something to summarize :)")
+    response = chatbot.chat(
+    input,
+    print_cache_score=True,
+    )
+    print("\n\n")
+    print(response)
+    
+def inform(chatbot,input):
+    
+    response = chatbot.chat(
+    input,
+    print_cache_score=True,
+    )
+    print(response)
 
-chatbot = Chatbot(
+chatbot_inform = Chatbot(
     model=model,
-    description="You are a very helpful tool to summarize information when givem. You give extra information fron the internet if asked, as well as other links or places to find more information. If asked, you can give key words of the subject. ",
+    description="You are a nice and helpful tool made to inform about any subject asked in a short yet complete way. Give less than 200 words please.",
     filters=filters,
     cache=cache,
     verbose=True,
-)
+    )
+chatbot_summarize = Chatbot(
+    model=model,
+    description="You are a very helpful tool to summarize information when given.  ",
+    filters=filters,
+    cache=cache,
+    verbose=True,
+    )
 
-response = chatbot.chat(
-    input_text,
-    print_cache_score=True,
-    cache_kwargs={"namespace": "chatbot-test"},
-)
+input_text = input("give me something to summarize \n")
+summaryze(chatbot_summarize,input_text)
 
-print(response)
+input_text = input("Hello, ask me anything \n")
+inform(chatbot_inform,input_text)
 
-response = chatbot.chat(
-    "What is my name?",
-    print_cache_score=True,
-    cache_kwargs={"namespace": "chatbot-test"},
-)
+input_text= getTranscript.getTrans("https://www.youtube.com/watch?v=KOdfpbnWLVo")
+summaryze(chatbot_summarize,input_text)
 
-print(response)
 
-chatbot.cache.vector_store.delete(delete_all=True, namespace="chatbot-test")
+
