@@ -23,9 +23,6 @@ import getTextFromPage
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/hello/', methods=['GET', 'POST'])
-def welcome():
-    return "Hello World!"
 
 # GET requests will be blocked
 @app.route('/json-example', methods=['POST'])
@@ -88,7 +85,7 @@ def query_example():
 
 # Funcion para paginas
 @app.route('/webpage-api', methods=['POST'])
-def webpage():
+def webpage_api():
     request_data = request.get_json()
 
     link = None
@@ -97,13 +94,128 @@ def webpage():
         if 'link' in request_data:
             link = request_data['link']
 
-    text = getTextFromPage.getTheText(link)
+    text = getTextFromPage.getTheText(link) 
+    summary = chatgpt.summary(text)
+    keywords = getKeyWords.getKeyWords(text) #! not done
+    topics = chatgpt.topics(text)
+    search = chatgpt.search(summary) #! not done
+    links = getLinks.getTheLinks(search)
+    title = chatgpt.getTitle(summary) #! not done
 
     return Response(
         response=json.dumps({
-            "data": {
-                "import_id": 12
-            }
+            "title": title,
+            "summary" : summary,
+            "keywords" : keywords,
+            "topics" : topics, # Arreglo de diccionarios
+            "links" : links,
+        }),
+    )
+
+
+# Funcion para links de youtube 
+@app.route('/youtube-api', methods=['POST'])
+def youtube_api():
+    request_data = request.get_json()
+
+    link = None
+
+    if request_data:
+        if 'link' in request_data:
+            link = request_data['link']
+
+    text = getTranscript.getTrans(link) 
+    summary = chatgpt.summary(text)
+    keywords = getKeyWords.getKeyWords(text) #! not done
+    topics = chatgpt.topics(text)
+    search = chatgpt.search(summary) #! not done
+    links = getLinks.getTheLinks(search)
+    title = chatgpt.getTitle(summary) #! not done
+
+    return Response(
+        response=json.dumps({
+            "title": title,
+            "summary" : summary,
+            "keywords" : keywords,
+            "topics" : topics, # Arreglo de diccionarios
+            "links" : links,
+        }),
+    )
+
+
+@app.route('/google-search-api', methods=['POST'])
+def google_search_api():
+    request_data = request.get_json()
+
+    google_search = None
+
+    if request_data:
+        if 'google_search' in request_data:
+            google_search = request_data['google_search']
+
+    links = getLinks.getTheLinks(google_search)
+    text = getTextFromPage.getTheText(links[0])
+    summary = chatgpt.summary(text)
+    keywords = getKeyWords.getKeyWords(text) #! not done
+    topics = chatgpt.topics(text)
+    title = chatgpt.getTitle(summary) #! not done
+
+    links.pop(0)
+
+    return Response(
+        response=json.dumps({
+            "title": title,
+            "summary" : summary,
+            "keywords" : keywords,
+            "topics" : topics, # Arreglo de diccionarios
+            "links" : links,
+        }),
+    )
+
+
+@app.route('/text-api', methods=['POST'])
+def text_api():
+    request_data = request.get_json()
+
+    text = None
+
+    if request_data:
+        if 'text' in request_data:
+            text = request_data['text']
+
+    summary = chatgpt.summary(text)
+    keywords = getKeyWords.getKeyWords(text) #! not done
+    topics = chatgpt.topics(text)
+    search = chatgpt.search(summary) #! not done
+    links = getLinks.getTheLinks(search)
+    title = chatgpt.getTitle(summary) #! not done
+
+    return Response(
+        response=json.dumps({
+            "title": title,
+            "summary" : summary,
+            "keywords" : keywords,
+            "topics" : topics, # Arreglo de diccionarios
+            "links" : links,
+        }),
+    )
+
+
+@app.route('/question-api', methods=['POST'])
+def question_api():
+    request_data = request.get_json()
+
+    question = None
+
+    if request_data:
+        if 'question' in request_data:
+            question = request_data['question']
+
+    answer = chatgpt.call_inform(question)
+
+    return Response(
+        response=json.dumps({
+            "answer" : answer,
         }),
     )
 
@@ -111,4 +223,3 @@ def webpage():
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=105)
 
-    
