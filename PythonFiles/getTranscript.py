@@ -11,8 +11,8 @@ def getTrans(link):
 
     for i in range(len(transcript)):
         answer += transcript[i]['text'] + ' '
-
-    return answer
+    final= answer.replace('\n', '')   
+    return final
 
 
 if __name__ == "__main__":
