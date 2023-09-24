@@ -71,12 +71,11 @@ def webpage_api():
             link = request_data['link']
 
     text = getTextFromPage.getTheText(link) 
-    summary = chatgpt.summary(text)
+    summary = chatgpt.summarize(text)
     keywords = getKeyWords.getKeyWords(text)
     topics = chatgpt.topics(text)
-    search = chatgpt.search(summary) #! not done
-    links = getLinks.getTheLinks(search)
     title = chatgpt.getTitle(summary) #! not done
+    links = getLinks.getTheLinks(title)
 
     return Response(
         response=json.dumps({
@@ -101,12 +100,11 @@ def youtube_api():
             link = request_data['link']
 
     text = getTranscript.getTrans(link) 
-    summary = chatgpt.summary(text)
+    summary = chatgpt.summarize(text)
     keywords = getKeyWords.getKeyWords(text)
     topics = chatgpt.topics(text)
-    search = chatgpt.search(summary) #! not done
-    links = getLinks.getTheLinks(search)
     title = chatgpt.getTitle(summary) #! not done
+    links = getLinks.getTheLinks(title)
 
     return Response(
         response=json.dumps({
@@ -131,7 +129,7 @@ def google_search_api():
 
     links = getLinks.getTheLinks(google_search)
     text = getTextFromPage.getTheText(links[0])
-    summary = chatgpt.summary(text)
+    summary = chatgpt.summarize(text)
     keywords = getKeyWords.getKeyWords(text)
     topics = chatgpt.topics(text)
     title = chatgpt.getTitle(summary) #! not done
@@ -159,12 +157,11 @@ def text_api():
         if 'text' in request_data:
             text = request_data['text']
 
-    summary = chatgpt.summary(text)
+    summary = chatgpt.summarize(text)
     keywords = getKeyWords.getKeyWords(text)
     topics = chatgpt.topics(text)
-    search = chatgpt.search(summary) #! not done
-    links = getLinks.getTheLinks(search)
     title = chatgpt.getTitle(summary) #! not done
+    links = getLinks.getTheLinks(title)
 
     return Response(
         response=json.dumps({
@@ -187,7 +184,7 @@ def question_api():
         if 'question' in request_data:
             question = request_data['question']
 
-    answer = chatgpt.call_inform(question)
+    answer = chatgpt.inform(question)
 
     return Response(
         response=json.dumps({

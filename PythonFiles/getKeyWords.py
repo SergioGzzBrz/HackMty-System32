@@ -1,7 +1,9 @@
+from string import punctuation
+
 # Elimina signos de puntuacion
 def remove_punctuations(input_string):
     # Make a translation table that maps all punctuation characters to None
-    translator = str.maketrans("", "", string.punctuation)
+    translator = str.maketrans("", "", punctuation)
 
     # Apply the translation table to the input string
     result = input_string.translate(translator)
