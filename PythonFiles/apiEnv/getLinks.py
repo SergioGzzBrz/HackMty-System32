@@ -12,7 +12,7 @@ class RedditSpider(scrapy.Spider):
 
     def start_requests(self):
         global textToSearch
-        textToSearch.replace(" ", "+")
+        textToSearch = textToSearch.replace(" ", "+")
         urls = ["https://www.google.com/search?q=" + str(textToSearch)]
         # print("Started")
         for url in urls:
