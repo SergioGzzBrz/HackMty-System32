@@ -3,9 +3,10 @@ from flask_cors import CORS
 import json
 import chatgpt
 import getKeyWords
-import getLinks
+from getLinks import getTheLinks
 import getTranscript
-import getTextFromPage
+from getTextFromPage import getTheText
+# import getTextFromPage
 
 app = Flask(__name__)
 CORS(app)
@@ -60,16 +61,13 @@ def webpage_api():
         if 'link' in request_data:
             link = request_data['link']
 
-    text = getTextFromPage.getTheText(link) 
+    text = getTheText(link) 
+    # print(text)
     summary = chatgpt.summarize(text)
     keywords = getKeyWords.getKeyWords(text)
     topics = chatgpt.topics(text)
     title = chatgpt.search(summary) 
-    title = title.replace("\n", "")
-    links = chatgpt.link(title)
-
-    # Splitting topics into dicts
-    topics_dict = dict()
+    links = getTheLinks(title)
     
     topics.replace("\n\n", "\n")
     topics = topics.split("\n")
@@ -114,7 +112,7 @@ def youtube_api():
     topics = chatgpt.topics(text)
     title = chatgpt.search(summary) 
     # title = title.replace("\n", "")
-    links = chatgpt.link(title)
+    links = getTheLinks(title)
     # Splitting topics into dicts
     topics_dict = dict()
     
@@ -147,20 +145,19 @@ def youtube_api():
 def google_search_api():
     request_data = request.get_json()
 
-    google_search = None
+    google_search = ""
 
     if request_data:
         if 'google_search' in request_data:
             google_search = request_data['google_search']
     google_search = google_search.replace("\n", "")
-    links = chatgpt.link(google_search)
-    text = getTextFromPage.getTheText(links[0])
+    text = getTheText(links[0])
     summary = chatgpt.summarize(text)
     keywords = getKeyWords.getKeyWords(text)
     topics = chatgpt.topics(text)
     title = chatgpt.search(summary) 
 
-    links.pop(0)
+    # links.pop(0)
 
     # Splitting topics into dicts
     topics_dict = dict()
@@ -195,7 +192,7 @@ def google_search_api():
 def text_api():
     request_data = request.get_json()
 
-    text = None
+    text = ""
 
     if request_data:
         if 'text' in request_data:
@@ -206,7 +203,7 @@ def text_api():
     topics = chatgpt.topics(text)
     title = chatgpt.search(summary) 
     title = title.replace("\n", "")
-    links = chatgpt.link(title)
+    links = getTheLinks(title)
 
     # Splitting topics into dicts
     topics_dict = dict()
@@ -258,4 +255,5 @@ def question_api():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=105)
+
 
