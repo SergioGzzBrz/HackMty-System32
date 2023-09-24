@@ -9,6 +9,7 @@ const NewSearch = () => {
 
 	const [dragActive, setDragActive] = React.useState(false);
 	const [textArea, setTextArea] = useState("");
+	const [loading, setLoading] = useState(false);
   
 	// handle drag events
 	const handleDrag = function(e) {
@@ -36,6 +37,7 @@ const NewSearch = () => {
 	}
 
 	const submitText = async () => {
+		setLoading(true);
 		const response = await fetch("http://localhost:105/text-api", {
 			method: "POST",
 			mode: "cors",
@@ -74,7 +76,8 @@ const NewSearch = () => {
 
 	return (
 		<div className="container-center newsearch-container">
-			<h2>Begin a search</h2>
+			{loading && <h2>Loading...</h2>}
+			{loading || <><h2>Begin a search</h2>
 			<br />
 			<div className="searchbar inputbar searchbar-other">
 				<div className="input-icon"><i className="fa-solid fa-magnifying-glass"></i></div>
@@ -109,7 +112,7 @@ const NewSearch = () => {
 				<textarea className="textsearch" placeholder="Copy &amp; Paste your text into here" onChange={changeTextArea} value={textArea}></textarea>
 				<button onClick={submitText} className="full-width">Search this text</button>
 			</>}
-
+			</>}
 		</div>
 	);
 };
