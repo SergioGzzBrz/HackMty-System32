@@ -86,6 +86,13 @@ chatbot_summarize = Chatbot(
     cache=cache,
     verbose=False,
     )
+chatbot_title = Chatbot(
+    model=model,
+    description="You are a nice and helpful tool made to give a relevant and attractive title to the text given. Do not use rude language. ",
+    cache=cache,
+    verbose=False,
+    cache_probability=0.4
+    )
 
 def summarize(input_text):
     response = chatbot_summarize.chat(
@@ -129,6 +136,17 @@ def page(link):
     input_text=getTextFromPage.getTheText(link)
     return summarize(input_text)
 
+def search(input):
+    response = chatbot_title.chat(
+        input,
+        print_cache_score=False,
+    )
+    print("\n\n")
+    content=response.message.content
+    print(content)
+    all_responses.append(response.message.content)
+    return(content)
+
 # input_text = input("give me something to summarize \n")
 # text = input_text.replace('\n', '') 
 txt="""El avión roquero (Ptyonoprogne rupestris) es una especie de ave que pertenece a la familia de los aviones y golondrinas. Mide alrededor de 14 cm de largo y tiene un plumaje de color marrón ceniza en la parte superior y más claro en la parte inferior. Su cola es corta y cuadrada, con manchas blancas en las plumas. Esta especie habita en las montañas del sur de Europa, el noroeste de África y el sur de Asia. Aunque se pueden confundir con otras especies similares, el avión roquero es de mayor tamaño, tiene manchas más notorias en la cola y su plumaje es de tono diferente.  La mayoría de los ejemplares en Europa son residentes, pero las poblaciones más al norte y en Asia son migratorias.
@@ -154,11 +172,13 @@ print('\n\n\n')
 video("https://www.youtube.com/watch?v=KOdfpbnWLVo")
 print('\n\n\n')
 
-page("https://www.nationalgeographic.com.es/animales/pinguinos")
-
+example=page("https://www.nationalgeographic.com.es/animales/pinguinos")
 print('\n\n\n')
+
+search(example)
+print('\n\n\n')
+
 print(all_responses)
 
 with open('./PythonFiles/responses.json','w',encoding='latin-1') as f:
     json.dump(all_responses,f)
-    
